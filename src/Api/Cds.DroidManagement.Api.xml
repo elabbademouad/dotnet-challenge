@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cds.DroidManagement.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Cds.DroidManagement.Api.Bootstrap.Program">
+            <summary>
+            Entry point class used at runtime.
+            </summary>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.Bootstrap.Program.Main(System.String[])">
+            <summary>
+            Defines the entry point of the application.
+            </summary>
+            <param name="args">The application arguments.</param>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.Bootstrap.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Creates the web build host.
+            </summary>
+            <param name="args">The application arguments.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Cds.DroidManagement.Api.Bootstrap.Startup">
+            <summary>
+            Represents the application's bootstrap.
+            </summary>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.Bootstrap.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cds.DroidManagement.Api.Bootstrap.Startup"/> class.
+            </summary>
+            <param name="environment">The environment.</param>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.Bootstrap.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">The services.</param>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.Bootstrap.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">The application.</param>
+        </member>
+        <member name="T:Cds.DroidManagement.Api.DroidFeature.ArmsController">
+            <summary>
+            Arms Controller
+            </summary>
+        </member>
+        <member name="T:Cds.DroidManagement.Api.DroidFeature.DroidsController">
+            <summary>
+            Droids Controller
+            </summary>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.DroidsController.#ctor(Cds.DroidManagement.Infrastructure.DroidRepositories.Abstractions.IReadDroidRepository,Cds.DroidManagement.Domain.DroidAggregate.Abstractions.IDroidHandler)">
+            <summary>
+            DroidsController constructor
+            </summary>
+            <param name="readDroidRepository"></param>
+            <param name="droidHandler"></param>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.DroidsController.GetAsync(System.Int32,System.Int32)">
+            <summary>
+            Get all droids paged
+            </summary>
+            <param name="pageIndex">Index of the page</param>
+            <param name="pageSize">Size of page(Default = 10)</param>
+            <returns>
+            A list of droids
+            </returns>
+            <remarks>
+            Get all droids paged from droidRepository.<br/>
+            There is no filter.<br/>
+            </remarks>
+            <response code="200">Successfully retrieve droids</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.DroidsController.GetAsync(System.Guid)">
+            <summary>
+            Get a specific droids
+            </summary>
+            <param name="serialNumber">Droid Serial Number.</param>
+            <returns>
+            The droid in body and the resource location in headers
+            </returns>
+            <remarks>
+            Get a specific droid from droid repository.<br/>
+            </remarks>
+            <response code="200">Successfully retrieve my droid</response>
+            <response code="404">Droid not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.DroidsController.PostAsync(Cds.DroidManagement.Domain.DroidAggregate.Commands.CreateDroid)">
+            <summary>
+            Add a Droid
+            </summary>
+            <param name="createDroid">Creation command for a droid</param>
+            <returns>
+            A specific droid
+            </returns>
+            <remarks>
+            Add a new Droid with the specified name if no other droid has the same name.<br/>
+            </remarks>
+            <response code="204">Successfully created</response>
+            <response code="404">Droid not found</response>
+            <response code="409">Droid with this name already exists</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.DroidsController.PutAsync(System.Guid,Cds.DroidManagement.Domain.DroidAggregate.Commands.UpdateDroid)">
+            <summary>
+            Update a Droid
+            </summary>
+            <param name="serialNumber">Droid serial number.</param>
+            <param name="updateDroid">Droid.</param>
+            <remarks>
+            Update the nickname of the Droid with the specified serial number.<br/>
+            </remarks>
+            <response code="204">Successfully updated</response>
+            <response code="404">Droid not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.DroidsController.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a Droid
+            </summary>
+            <param name="serialNumber">Droid serial number.</param>
+            <remarks>
+            Update the name of the Droid with the specified serial number.<br/>
+            </remarks>
+            <response code="204">Successfully updated</response>
+            <response code="404">Droid not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="T:Cds.DroidManagement.Api.DroidFeature.ViewModels.ArmViewModel">
+            <summary>
+            The Arm.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.ArmViewModel.SerialNumber">
+            <summary>
+            The Serial Number.
+            </summary>
+        </member>
+        <member name="T:Cds.DroidManagement.Api.DroidFeature.ViewModels.DroidViewModel">
+            <summary>
+            The Droid.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.DroidViewModel.SerialNumber">
+            <summary>
+            The serial Number.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.DroidViewModel.CreatedOn">
+            <summary>
+            The Creation Date.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.DroidViewModel.Name">
+            <summary>
+            The Name.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.DroidViewModel.Nickname">
+            <summary>
+            The Nickname.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.DroidViewModel.Quote">
+            <summary>
+            The quote.
+            </summary>
+        </member>
+        <member name="T:Cds.DroidManagement.Api.DroidFeature.ViewModels.PagedList`1">
+            <summary>
+            Paged List T Items
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.PagedList`1.PageSize">
+            <summary>
+            The page Size.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.PagedList`1.PageIndex">
+            <summary>
+            The Page Index.
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.PagedList`1.HasNextPage">
+            <summary>
+            True if there is a next page of Items
+            </summary>
+        </member>
+        <member name="P:Cds.DroidManagement.Api.DroidFeature.ViewModels.PagedList`1.Items">
+            <summary>
+            Collection of Items
+            </summary>
+        </member>
+    </members>
+</doc>
