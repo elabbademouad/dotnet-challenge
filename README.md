@@ -10,7 +10,7 @@ Qui sait ? C'est peut-être également l'occasion de te faire repérer.
 La solution est en AspNet Core 2.1 et a été créé avec visual studio 2017
 C'est une Api de gestion de Droid utilisant les patrons de conception :
 
-- DDD (Domain Design Driven)
+- DDD (Domain Driven Design)
 - CQRS (Command Query Responsibility Segregation)
 
 ## Pour participer
