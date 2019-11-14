@@ -8,39 +8,77 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cds.DroidManagement.Infrastructure.DroidRepositories
 {
     public class SqlServerArmRepository : IArmRepository, IReadArmRepository
     {
+
         public SqlServerArmRepository(Func<IDbConnection> connectionProvider)
         {
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
+            _connectionProvider = connectionProvider ?? throw new ArgumentNullException(nameof(connectionProvider));
         }
 
-        public Task<IReadOnlyCollection<IArmDto>> GetDroidArmsAsync(DroidId serialNumber)
+        public async Task<IReadOnlyCollection<IArmDto>> GetDroidArmsAsync(DroidId serialNumber)
         {
-            return null;
+            using (var connection = _connectionProvider())
+            {
+                IEnumerable<IArmDto> queryResult = await ExecuteGetDroidArmsAsync(serialNumber, connection);
+                IReadOnlyCollection<IArmDto> armDtoList = queryResult.AsList();
+                return armDtoList;
+            }
         }
 
-        public Task InsertDroidArmAsync(DroidId serialNumber, Arm arm, Action<IDroidValidationInfo> assertDroidIsValid)
+        public async Task InsertDroidArmAsync(DroidId serialNumber, Arm arm, Action<IDroidValidationInfo> assertDroidIsValid)
         {
-            return null;
+            using (var connection = _connectionProvider())
+            {
+                await ExecuteInsertDroidArmAsync(serialNumber, arm, connection);
+            }
         }
 
-        public Task<bool> DeleteAsync(ArmId serialNumber, object connection)
+        public async Task<bool> DeleteAsync(ArmId serialNumber, object connection)
         {
-            return null;
+            if (connection != null && connection is IDbConnection)
+            {
+                using (IDbConnection dbConnection = (IDbConnection)connection)
+                {
+                    var armIds = new List<ArmId>()
+                    {
+                        serialNumber
+                    };
+                    return await DeleteAsync(armIds, connection);
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
+
         }
 
-        public Task<bool> DeleteAsync(List<ArmId> serialNumbers, object connection)
+        public async Task<bool> DeleteAsync(List<ArmId> serialNumbers, object connection)
         {
-            return null;
+            if (connection != null && connection is IDbConnection)
+            {
+                using (IDbConnection dbConnection = (IDbConnection)connection)
+                {
+                    ArmIdListDto armIdListDto = new ArmIdListDto(serialNumbers);
+                    return await ExecuteDeleteArmAsync(armIdListDto, dbConnection) == serialNumbers.Count;
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
         }
 
         private static Task<bool> DeleteAsync(List<ArmId> serialNumbers, IDbConnection connection)
         {
-            return null;
+            return DeleteAsync(serialNumbers, connection);
         }
 
         #region Database Access
@@ -77,5 +115,8 @@ namespace Cds.DroidManagement.Infrastructure.DroidRepositories
             internal const string DroidArms = "ps_arm_s_droidArms";
             internal const string DeleteArm = "ps_arm_d_deleteArm";
         }
+
+        private readonly Func<IDbConnection> _connectionProvider;
+
     }
 }

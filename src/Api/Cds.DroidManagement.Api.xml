@@ -51,6 +51,39 @@
             Arms Controller
             </summary>
         </member>
+        <member name="F:Cds.DroidManagement.Api.DroidFeature.ArmsController._droidHandler">
+            <summary>
+            DroitHandler
+            </summary>
+        </member>
+        <member name="F:Cds.DroidManagement.Api.DroidFeature.ArmsController._readArmRepository">
+            <summary>
+            Read only ArmRepository
+            </summary>
+        </member>
+        <member name="F:Cds.DroidManagement.Api.DroidFeature.ArmsController._readDroidRepository">
+            <summary>
+            Read only DroidRepository
+            </summary>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.ArmsController.#ctor(Cds.DroidManagement.Infrastructure.DroidRepositories.Abstractions.IReadArmRepository,Cds.DroidManagement.Infrastructure.DroidRepositories.Abstractions.IReadDroidRepository,Cds.DroidManagement.Domain.DroidAggregate.Abstractions.IDroidHandler)">
+            <summary>
+            ArmsController constructor
+            </summary>
+            <param name="readArmRepository"></param>
+            <param name="readDroidRepository"></param>
+            <param name="droidHandler"></param>
+        </member>
+        <member name="M:Cds.DroidManagement.Api.DroidFeature.ArmsController.PostAsync(System.Guid)">
+            <summary>
+            Add a Arm
+            </summary>
+            <param name="serialNumber">Droid serial number</param>
+            <response code="204">Successfully created</response>
+            <response code="404">Droid not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Cds.DroidManagement.Api.DroidFeature.ArmsController.GetAsync(System.Guid)" -->
         <member name="T:Cds.DroidManagement.Api.DroidFeature.DroidsController">
             <summary>
             Droids Controller
